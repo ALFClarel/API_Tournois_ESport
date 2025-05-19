@@ -1,0 +1,25 @@
+<!— fragment offline alert —>
+<div th:fragment="offlineFragment">
+    <div
+            id="offline-alert"
+            class="fixed top-4 right-4 bg-red-600 text-white px-4 py-2 rounded-lg shadow-lg hidden z-50"
+    >
+        You are offline. Some features may be unavailable.
+    </div>
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        const offlineAlert = document.getElementById('offline-alert');
+        function updateOnlineStatus() {
+            if (navigator.onLine) {
+                offlineAlert.classList.add('hidden');
+            } else {
+                offlineAlert.classList.remove('hidden');
+            }
+        }
+        window.addEventListener('online',  updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+        updateOnlineStatus();
+        /*]]>*/
+    </script>
+</div>

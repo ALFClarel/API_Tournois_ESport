@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{base}">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>eSports Tournament Manager – Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%230a0e23" fill-opacity="0.08" d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,218.7C672,213,768,139,864,128C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-6">
+<div th:replace="components/offline :: offlineFragment"></div>
+<!-- Header -->
+<div class="text-white mb-8">
+    <h1 class="text-3xl font-bold tracking-tight">Dashboard</h1>
+    <p class="text-gray-400 mt-1">Overview of your tournaments and users</p>
+</div>
+
+<!-- Stat cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Registered Users</h2>
+        <p th:text="${totalUsers ?: 42}" class="text-4xl font-bold text-white">42</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Tournaments Created</h2>
+        <p th:text="${totalTournaments ?: 7}" class="text-4xl font-bold text-white">7</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Ongoing Games</h2>
+        <p th:text="${ongoingGames ?: 12}" class="text-4xl font-bold text-white">12</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Round Robin</h2>
+        <p th:text="${countRoundRobin ?: 3}" class="text-4xl font-bold text-white">3</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Single Elimination</h2>
+        <p th:text="${countSimpleElim ?: 2}" class="text-4xl font-bold text-white">2</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h2 class="text-gray-400 text-sm font-medium mb-2">Double Elimination</h2>
+        <p th:text="${countDoubleElim ?: 2}" class="text-4xl font-bold text-white">2</p>
+    </div>
+</div>
+
+<!-- Recent tournaments table -->
+<div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+    <h2 class="text-xl font-bold text-white mb-4">Recent Tournaments</h2>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-300">
+            <thead class="text-xs uppercase bg-gray-900 text-gray-400">
+            <tr>
+                <th class="px-4 py-2">ID</th>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Type</th>
+                <th class="px-4 py-2">Status</th>
+                <th class="px-4 py-2">Start Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+              To see rows without DB data, you pouvez aussi :
+                1. supprimer l'attribut th:each et hardcoder quelques <tr>
+                2. ou initialiser `recentTournaments` dans votre controller :
+                   model.addAttribute("recentTournaments", List.of(yourDummyTournaments));
+            -->
+            <tr th:each="t : ${recentTournaments}" class="border-b border-gray-700 hover:bg-gray-700">
+                <td class="px-4 py-3" th:text="${t.id}">1</td>
+                <td class="px-4 py-3" th:text="${t.name}">Summer Cup</td>
+                <td class="px-4 py-3" th:text="${t.type}">Round Robin</td>
+                <td class="px-4 py-3" th:text="${t.status}">In Progress</td>
+                <td class="px-4 py-3" th:text="${#dates.format(t.startDate,'MM/dd/yyyy')}">05/10/2025</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
