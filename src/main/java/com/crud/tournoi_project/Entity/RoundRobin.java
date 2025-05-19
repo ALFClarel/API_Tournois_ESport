@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class RoundRobin extends Tournoi{
+public class RoundRobin extends Tournament{
     public Boolean getMatchRetour() {
         return isMatchRetour;
     }

@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class SimpleElim extends Tournoi{
+public class SimpleElim extends Tournament{
     public Boolean getTroisiemePlace() {
         return isTroisiemePlace;
     }

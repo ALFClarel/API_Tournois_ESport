@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class DoubleElim extends Tournoi{
+public class DoubleElim extends Tournament{
     private Boolean isFinale;
 
     public Boolean getFinale() {

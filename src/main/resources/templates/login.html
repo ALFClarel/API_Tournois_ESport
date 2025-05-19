@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eSports Tournament Manager - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%230a0e23" fill-opacity="0.08" d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,218.7C672,213,768,139,864,128C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md">
+    <!-- Logo Area -->
+    <div class="text-center mb-8">
+        <div class="inline-block bg-gradient-to-r from-purple-600 to-blue-500 p-1 rounded-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 bg-gray-900 rounded-lg p-2 text-white" viewBox="0 0 20 20" fill="currentColor">
+                <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+            </svg>
+        </div>
+        <h1 class="mt-4 text-3xl font-bold text-white tracking-tight">eSports Tournament Manager</h1>
+        <p class="text-gray-400 mt-1">Sign in to access your dashboard</p>
+    </div>
+
+    <!-- Login Card -->
+    <div class="bg-gray-800 rounded-2xl shadow-2xl overflow-hidden border border-gray-700">
+        <!-- Card Header -->
+        <div class="px-6 py-4 bg-gray-900 border-b border-gray-700">
+            <h2 class="text-xl font-bold text-white text-center">LOGIN</h2>
+        </div>
+
+        <div th:if="${errorMessage}"
+             th:text="${errorMessage}"
+             class="mb-4 text-red-600 font-medium">
+        </div>
+
+        <!-- Form Area -->
+        <form name="f" action="/perform_login" method="post" class="p-6 space-y-6">
+            <!-- Username Field -->
+            <div class="space-y-2">
+                <label for="username" class="text-sm font-medium text-gray-300 block">Username</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="text" name="username" id="username" class="bg-gray-700 border border-gray-600 text-white sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="Enter your username" required>
+                </div>
+            </div>
+
+            <!-- Password Field -->
+            <div class="space-y-2">
+                <label for="password" class="text-sm font-medium text-gray-300 block">Password</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <input type="password" name="password" id="password" class="bg-gray-700 border border-gray-600 text-white sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5" placeholder="••••••••" required>
+                </div>
+            </div>
+
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <input id="remember-me" name="remember-me" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-700 border-gray-600 rounded focus:ring-blue-500">
+                    <label for="remember-me" class="ml-2 text-sm text-gray-300">Remember me</label>
+                </div>
+                <a href="#" class="text-sm font-medium text-blue-400 hover:underline">Forgot password?</a>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+                <button type="submit" name="submit" class="w-full text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:ring-4 focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-3 text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-103">
+                    SIGN IN
+                </button>
+            </div>
+
+            <!-- Register Link -->
+            <div class="text-sm text-gray-400 text-center mt-4">
+                Don't have an account?
+                <a href="#" class="text-blue-400 hover:underline font-medium">Register now</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="mt-8 text-center text-xs text-gray-500">
+        &copy; 2025 eSports Tournament Manager. All rights reserved.
+    </div>
+</div>
+</body>
+</html>
