@@ -2,6 +2,8 @@ package com.crud.tournoi_project.Controller;
 
 import com.crud.tournoi_project.Entity.Game;
 import com.crud.tournoi_project.Repository.GameRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ public class GameController {
 
     private final GameRepository gameRepository;
 
+    @Autowired
     public GameController(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
     }
@@ -24,9 +27,9 @@ public class GameController {
     }
 
     @PostMapping("/game/save")
-    public String processRegister(@ModelAttribute("user") Game game) {
+    @Transactional
+    public String processRegister(@ModelAttribute("game") Game game) {
         gameRepository.save(game);
-
-        return "redirect:/games";
+        return "redirect:/users/homepage";
     }
 }
