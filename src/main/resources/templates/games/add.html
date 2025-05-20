@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creta Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md">
+    <!-- Logo Area -->
+    <div class="text-center mb-8">
+        <div class="inline-block bg-gradient-to-r from-purple-600 to-blue-500 p-1 rounded-xl">
+            <h1 class="text-white text-2xl font-bold px-6 py-2">ESport Manager</h1>
+        </div>
+    </div>
+
+    <!-- Card Content -->
+    <div class="bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-700">
+        <h2 class="text-xl font-bold text-white mb-6 text-center">Create a new game</h2>
+
+        <form method="post" action="/game/save">
+            <!-- Title Field -->
+            <div class="mb-6">
+                <label for="title" class="block mb-2 text-sm font-medium text-gray-300">Title</label>
+                <input type="text" id="title" name="title" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+            </div>
+
+            <!-- Description Field -->
+            <div class="mb-6">
+                <label for="description" class="block mb-2 text-sm font-medium text-gray-300">Description</label>
+                <textarea id="description" name="description" rows="4" class="bg-gray-700 border border-gray-600 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required></textarea>
+            </div>
+
+            <!-- Button Area -->
+            <div class="flex space-x-4">
+                <button type="button" class="w-1/3 text-white bg-gray-700 hover:bg-gray-600 focus:ring-4 focus:ring-gray-800 font-medium rounded-lg text-sm px-5 py-3 text-center transition duration-300 ease-in-out">
+                    Cancel
+                </button>
+                <button type="submit" class="w-2/3 text-white bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 focus:ring-4 focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-3 text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-103">
+                    Create Game
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

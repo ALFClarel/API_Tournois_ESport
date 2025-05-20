@@ -1,14 +1,18 @@
 package com.crud.tournoi_project.Controller;
 
-
+import com.crud.tournoi_project.Repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SecurityController {
+
+    @Autowired
+    private UserRepository userRepository;
 
     @GetMapping("/login")
     public String login(
@@ -19,7 +23,6 @@ public class SecurityController {
         if (error != null) {
             model.addAttribute("errorMessage", "Identifiant ou mot de passe invalide");
         }
-
         if (logout != null) {
             model.addAttribute("logoutMessage", "Vous êtes bien déconnecté");
         }

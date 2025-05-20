@@ -1,7 +1,11 @@
 package com.crud.tournoi_project.Controller;
 
 import com.crud.tournoi_project.Entity.Tournament;
+import com.crud.tournoi_project.Entity.User;
 import com.crud.tournoi_project.Repository.TournamentRepository;
+import com.crud.tournoi_project.Repository.UserRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,9 +15,11 @@ import java.util.List;
 @Controller
 public class UserController {
     private final TournamentRepository tournamentRepository;
+    private final UserRepository userRepository;
 
-    public UserController(TournamentRepository tournamentRepository) {
+    public UserController(TournamentRepository tournamentRepository, UserRepository userRepository) {
         this.tournamentRepository = tournamentRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/users/homepage")
