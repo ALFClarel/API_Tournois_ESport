@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Jeux | ESport Manager</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-6">
+<!-- Logo Area -->
+<div class="text-center mb-10 animate-fadeIn">
+    <div class="inline-block bg-gradient-to-r from-purple-600 to-blue-500 p-1 rounded-xl">
+        <h1 class="text-white text-3xl font-bold px-8 py-3">ESport Manager</h1>
+    </div>
+</div>
+
+<!-- Header Section -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+    <div class="flex justify-between items-center">
+        <h2 class="text-2xl font-bold text-white">Liste des Jeux</h2>
+        <a href="/game/add" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Ajouter un jeu
+        </a>
+    </div>
+</div>
+
+<!-- Games Grid -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Game Card - Repeated for each game -->
+        <div th:each="game : ${games}" class="bg-gray-800 border border-gray-700 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-purple-500/20 hover:border-purple-500/50 hover:-translate-y-1">
+            <div class="p-6">
+                <h3 th:text="${game.title}" class="text-xl font-bold text-white mb-2">Nom du jeu</h3>
+                <p th:text="${game.description}" class="text-gray-300 mb-4 line-clamp-3">Description du jeu, qui peut être sur plusieurs lignes et sera tronquée après 3 lignes si elle est trop longue.</p>
+
+                <div class="flex justify-end">
+                    <a th:href="@{/game/details/{id}(id=${game.id})}" class="text-sm font-medium text-blue-400 hover:text-blue-300 transition">
+                        Voir détails →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Empty State - Shown when no games are available -->
+        <div th:if="${#lists.isEmpty(games)}" class="col-span-full bg-gray-800 border border-gray-700 rounded-xl p-10 text-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-600 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+            <h3 class="text-xl font-medium text-white mb-2">Aucun jeu disponible</h3>
+            <p class="text-gray-400 mb-6">Commencez à ajouter des jeux pour les voir apparaître ici</p>
+            <a href="/game/add" class="inline-flex items-center px-4 py-2 bg-gradient-to-r from-purple-600 to-blue-500 hover:from-purple-700 hover:to-blue-600 text-white font-medium rounded-lg transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Ajouter votre premier jeu
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Home Button -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 text-center">
+    <a href="/users/homepage" class="inline-flex items-center px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition duration-300">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+        </svg>
+        Retour à l'accueil
+    </a>
+</div>
+</body>
+</html>

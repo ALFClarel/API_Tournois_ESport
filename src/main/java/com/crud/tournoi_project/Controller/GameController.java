@@ -6,9 +6,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class GameController {
@@ -18,6 +16,13 @@ public class GameController {
     @Autowired
     public GameController(GameRepository gameRepository) {
         this.gameRepository = gameRepository;
+    }
+
+    @GetMapping("/games")
+    public String gamesPage(Model model) {
+        model.addAttribute("games", gameRepository.findAll());
+
+        return "games/index";
     }
 
     @GetMapping("/game/add")
@@ -30,6 +35,14 @@ public class GameController {
     @Transactional
     public String processRegister(@ModelAttribute("game") Game game) {
         gameRepository.save(game);
-        return "redirect:/users/homepage";
+        return "redirect:/games";
+    }
+
+    @GetMapping("/game/details/{id}")
+    @Transactional
+    public String updateGame(@PathVariable Long id, @ModelAttribute("game") Game game) {
+        gameRepository.findById(id);
+        gameRepository.save(game);
+        return "redirect:/games";
     }
 }
