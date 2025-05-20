@@ -5,6 +5,8 @@ import java.util.Date;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING,
+        name = "TYPE")
 public class Tournament {
 
     @Id
@@ -13,6 +15,7 @@ public class Tournament {
     private String nom;
     private Date date_debut;
     private Date date_fin;
+    private String tournamentClass;
 
     public void setId(Long id) {
         this.id = id;
@@ -44,6 +47,14 @@ public class Tournament {
 
     public Long getId() {
         return id;
+    }
+
+    public String getTournamentClass() {
+        return tournamentClass;
+    }
+
+    public void setTournamentClass(String tournamentClass) {
+        this.tournamentClass = tournamentClass;
     }
 
 }

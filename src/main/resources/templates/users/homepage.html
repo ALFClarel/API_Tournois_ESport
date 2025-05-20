@@ -1,8 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{base}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -19,14 +16,12 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-6">
-<div th:replace="components/offline :: offlineFragment"></div>
 <!-- Header -->
 <div class="text-white mb-8">
     <h1 class="text-3xl font-bold tracking-tight">Dashboard</h1>
     <p class="text-gray-400 mt-1">Overview of your tournaments and users</p>
 </div>
 
-<!-- Stat cards -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
         <h2 class="text-gray-400 text-sm font-medium mb-2">Registered Users</h2>
@@ -34,25 +29,35 @@
     </div>
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
         <h2 class="text-gray-400 text-sm font-medium mb-2">Tournaments Created</h2>
-        <p th:text="${totalTournaments ?: 7}" class="text-4xl font-bold text-white">7</p>
+        <p th:text="${countTournament ?: 7}" class="text-4xl font-bold text-white">7</p>
     </div>
-    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
-        <h2 class="text-gray-400 text-sm font-medium mb-2">Ongoing Games</h2>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6 flex flex-col">
+        <h2 class="text-gray-400 text-sm font-medium mb-2 flex justify-between items-center">
+            <span>Games</span>
+            <a href="/game/add">
+                <svg class="h-8 w-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="currentColor"/>
+                    <path d="M12.75 9C12.75 8.58579 12.4142 8.25 12 8.25C11.5858 8.25 11.25 8.58579 11.25 9L11.25 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H11.25V15C11.25 15.4142 11.5858 15.75 12 15.75C12.4142 15.75 12.75 15.4142 12.75 15L12.75 12.75H15C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H12.75V9Z" fill="currentColor"/>
+                </svg>
+            </a>
+        </h2>
         <p th:text="${ongoingGames ?: 12}" class="text-4xl font-bold text-white">12</p>
     </div>
+
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
         <h2 class="text-gray-400 text-sm font-medium mb-2">Round Robin</h2>
-        <p th:text="${countRoundRobin ?: 3}" class="text-4xl font-bold text-white">3</p>
+        <p th:text="${countRoundRobin}" class="text-4xl font-bold text-white"></p>
     </div>
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
         <h2 class="text-gray-400 text-sm font-medium mb-2">Single Elimination</h2>
-        <p th:text="${countSimpleElim ?: 2}" class="text-4xl font-bold text-white">2</p>
+        <p th:text="${countSimpleElim}" class="text-4xl font-bold text-white"></p>
     </div>
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
         <h2 class="text-gray-400 text-sm font-medium mb-2">Double Elimination</h2>
-        <p th:text="${countDoubleElim ?: 2}" class="text-4xl font-bold text-white">2</p>
+        <p th:text="${countDoubleElim}" class="text-4xl font-bold text-white"></p>
     </div>
 </div>
+
 
 <!-- Recent tournaments table -->
 <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
@@ -64,24 +69,25 @@
                 <th class="px-4 py-2">ID</th>
                 <th class="px-4 py-2">Name</th>
                 <th class="px-4 py-2">Type</th>
-                <th class="px-4 py-2">Status</th>
                 <th class="px-4 py-2">Start Date</th>
+                <th class="px-4 py-2">End Date</th>
             </tr>
             </thead>
             <tbody>
-            <!--
-              To see rows without DB data, you pouvez aussi :
-                1. supprimer l'attribut th:each et hardcoder quelques <tr>
-                2. ou initialiser `recentTournaments` dans votre controller :
-                   model.addAttribute("recentTournaments", List.of(yourDummyTournaments));
-            -->
-            <tr th:each="t : ${recentTournaments}" class="border-b border-gray-700 hover:bg-gray-700">
+            <tr class="text-white" th:each="t : ${tournaments}">
                 <td class="px-4 py-3" th:text="${t.id}">1</td>
-                <td class="px-4 py-3" th:text="${t.name}">Summer Cup</td>
-                <td class="px-4 py-3" th:text="${t.type}">Round Robin</td>
-                <td class="px-4 py-3" th:text="${t.status}">In Progress</td>
-                <td class="px-4 py-3" th:text="${#dates.format(t.startDate,'MM/dd/yyyy')}">05/10/2025</td>
+                <td class="px-4 py-3" th:text="${t.nom}">Summer Cup</td>
+                <td class="px-4 py-3 ">
+                    <span class="p-2 rounded-full"
+                          th:text="${t.tournamentClass}"
+                          th:classappend="${t.tournamentClass == 'SimpleElim' ? 'bg-blue-500' : (t.tournamentClass == 'DoubleElim' ? 'bg-green-500' :(t.tournamentClass == 'RoundRobin' ? 'bg-yellow-500' : ''))}">
+                    </span>
+                </td>
+                <td class="px-4 py-3" th:text="${#dates.format(t.date_debut,'MM/dd/yyyy')}">05/10/2025</td>
+                <td class="px-4 py-3" th:text="${#dates.format(t.date_fin,'MM/dd/yyyy')}">05/10/2025</td>
             </tr>
+
+
             </tbody>
         </table>
     </div>

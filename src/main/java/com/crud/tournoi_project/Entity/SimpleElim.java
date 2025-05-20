@@ -1,11 +1,9 @@
 package com.crud.tournoi_project.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
+@DiscriminatorValue("SIMPLE")
 public class SimpleElim extends Tournament{
     public Boolean getTroisiemePlace() {
         return isTroisiemePlace;
