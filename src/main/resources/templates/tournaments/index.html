@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>eSports Tournament Manager – Tournaments</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"%3E%3Cpath fill="%230a0e23" fill-opacity="0.08" d="M0,256L48,229.3C96,203,192,149,288,154.7C384,160,480,224,576,218.7C672,213,768,139,864,128C960,117,1056,171,1152,197.3C1248,224,1344,224,1392,224L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"%3E%3C/path%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen p-6">
+<!-- Header -->
+<div class="text-white mb-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
+    <div>
+        <h1 class="text-3xl font-bold tracking-tight">Tournaments</h1>
+        <p class="text-gray-400 mt-1">Manage and view all tournaments</p>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/users/homepage" class="flex items-center justify-center p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition-colors">
+            <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <span>Dashboard</span>
+        </a>
+        <a href="/tournament/add" class="flex items-center justify-center p-3 rounded-lg bg-purple-600 hover:bg-purple-700 transition-colors">
+            <svg class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path opacity="0.5" d="M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z" fill="currentColor"/>
+                <path d="M12.75 9C12.75 8.58579 12.4142 8.25 12 8.25C11.5858 8.25 11.25 8.58579 11.25 9L11.25 11.25H9C8.58579 11.25 8.25 11.5858 8.25 12C8.25 12.4142 8.58579 12.75 9 12.75H11.25V15C11.25 15.4142 11.5858 15.75 12 15.75C12.4142 15.75 12.75 15.4142 12.75 15L12.75 12.75H15C15.4142 12.75 15.75 12.4142 15.75 12C15.75 11.5858 15.4142 11.25 15 11.25H12.75V9Z" fill="currentColor"/>
+            </svg>
+            <span>Add Tournament</span>
+        </a>
+    </div>
+</div>
+
+<!-- Search and Filter Section -->
+<div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6 mb-8">
+    <div class="flex flex-col lg:flex-row gap-4 items-center">
+        <div class="flex-1 w-full">
+            <label for="search" class="sr-only">Search tournaments</label>
+            <div class="relative">
+                <input type="text"
+                       id="search"
+                       placeholder="Search tournaments by name..."
+                       class="w-full px-4 py-3 pl-12 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent">
+                <svg class="absolute left-4 top-3.5 h-5 w-5 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                    <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+        <div class="flex gap-2">
+            <select id="statusFilter" class="px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <option value="">All Status</option>
+                <option value="upcoming">Upcoming</option>
+                <option value="ongoing">Ongoing</option>
+                <option value="completed">Completed</option>
+            </select>
+            <select id="typeFilter" class="px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <option value="">All Types</option>
+                <option value="RoundRobin">Round Robin</option>
+                <option value="SimpleElim">Single Elimination</option>
+                <option value="DoubleElim">Double Elimination</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<!-- Tournament Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h3 class="text-gray-400 text-sm font-medium mb-2">Total Tournaments</h3>
+        <p class="text-3xl font-bold text-white" th:text="${tournaments.size()}">0</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h3 class="text-gray-400 text-sm font-medium mb-2">Active Tournaments</h3>
+        <p class="text-3xl font-bold text-green-400" id="activeTournaments">0</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h3 class="text-gray-400 text-sm font-medium mb-2">Upcoming</h3>
+        <p class="text-3xl font-bold text-blue-400" id="upcomingTournaments">0</p>
+    </div>
+    <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-6">
+        <h3 class="text-gray-400 text-sm font-medium mb-2">Completed</h3>
+        <p class="text-3xl font-bold text-gray-400" id="completedTournaments">0</p>
+    </div>
+</div>
+
+<!-- Tournaments Table -->
+<div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 overflow-hidden">
+    <div class="p-6 border-b border-gray-700">
+        <h2 class="text-xl font-bold text-white">All Tournaments</h2>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left text-gray-300">
+            <thead class="text-xs uppercase bg-gray-900 text-gray-400">
+            <tr>
+                <th class="px-6 py-4">ID</th>
+                <th class="px-6 py-4">Tournament Name</th>
+                <th class="px-6 py-4">Type</th>
+                <th class="px-6 py-4">Start Date</th>
+                <th class="px-6 py-4">End Date</th>
+                <th class="px-6 py-4">Status</th>
+                <!--<th class="px-6 py-4">Participants</th>
+                <th class="px-6 py-4">Prize Pool</th>-->
+                <th class="px-6 py-4">Actions</th>
+            </tr>
+            </thead>
+            <tbody id="tournamentsTableBody">
+            <tr class="text-white border-b border-gray-700 hover:bg-gray-750 transition-colors tournament-row"
+                th:each="tournament : ${tournaments}"
+                th:data-name="${tournament.nom}"
+                th:data-type="${tournament.tournamentClass}">
+                <td class="px-6 py-4 font-medium" th:text="${tournament.id}">1</td>
+                <td class="px-6 py-4">
+                    <div class="font-semibold" th:text="${tournament.nom}">Summer Championship</div>
+<!--
+                    <div class="text-gray-400 text-sm" th:text="${tournament.description ?: 'No description'}">Tournament description</div>
+-->
+                </td>
+                <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold"
+                                  th:text="${tournament.tournamentClass}"
+                                  th:classappend="${tournament.tournamentClass == 'SimpleElim' ? 'bg-blue-500 text-blue-100' :
+                                                  (tournament.tournamentClass == 'DoubleElim' ? 'bg-green-500 text-green-100' :
+                                                  (tournament.tournamentClass == 'RoundRobin' ? 'bg-yellow-500 text-yellow-100' : 'bg-gray-500 text-gray-100'))}">
+                                Round Robin
+                            </span>
+                </td>
+                <td class="px-6 py-4" th:text="${#dates.format(tournament.date_debut, 'MMM dd, yyyy')}">Mar 15, 2025</td>
+                <td class="px-6 py-4" th:text="${#dates.format(tournament.date_fin, 'MMM dd, yyyy')}">Mar 20, 2025</td>
+                <td class="px-6 py-4">
+                            <span class="px-3 py-1 rounded-full text-xs font-semibold tournament-status"
+                                  th:data-start="${tournament.date_debut}"
+                                  th:data-end="${tournament.date_fin}">
+                                Upcoming
+                            </span>
+                </td>
+                <!--<td class="px-6 py-4">
+                    <div class="text-white font-medium">
+                        <span th:text="${tournament.currentParticipants ?: 0}">0</span>
+                        <span class="text-gray-400">/ </span>
+                        <span th:text="${tournament.maxParticipants ?: 'Unlimited'}">16</span>
+                    </div>
+                </td>-->
+                <!--<td class="px-6 py-4">
+                            <span class="text-green-400 font-semibold" th:if="${tournament.prizePool != null and tournament.prizePool > 0}">
+                                $<span th:text="${#numbers.formatDecimal(tournament.prizePool, 0, 2)}">1000.00</span>
+                            </span>
+                    <span class="text-gray-500" th:unless="${tournament.prizePool != null and tournament.prizePool > 0}">No prize</span>
+                </td>-->
+                <td class="px-6 py-4">
+                    <div class="flex gap-2">
+                        <button class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors" title="View Details">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1 12S5 4 12 4S23 12 23 12S19 20 12 20S1 12 1 12Z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </button>
+                        <button class="p-2 bg-green-600 hover:bg-green-700 rounded-lg transition-colors" title="Edit Tournament">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M11 4H4C3.46957 4 2.96086 4.21071 2.58579 4.58579C2.21071 4.96086 2 5.46957 2 6V20C2 20.5304 2.21071 21.0391 2.58579 21.4142C2.96086 21.7893 3.46957 22 4 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M18.5 2.5C18.8978 2.10217 19.4374 1.87868 20 1.87868C20.5626 1.87868 21.1022 2.10217 21.5 2.5C21.8978 2.89782 22.1213 3.43739 22.1213 4C22.1213 4.56261 21.8978 5.10217 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </button>
+                        <a th:href="@{/tournament/delete/{id}(id=${tournament.id})}"
+                           class="p-2 bg-red-600 hover:bg-red-700 rounded-lg transition-colors" title="Delete Tournament">
+                            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8 6V4C8 3.46957 8.21071 2.96086 8.58579 2.58579C8.96086 2.21071 9.46957 2 10 2H14C14.5304 2 15.0391 2.21071 15.4142 2.58579C15.7893 2.96086 16 3.46957 16 4V6M19 6V20C19 20.5304 18.7893 21.0391 18.4142 21.4142C18.0391 21.7893 17.5304 22 17 22H7C6.46957 22 5.96086 21.7893 5.58579 21.4142C5.21071 21.0391 5 20.5304 5 20V6H19Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Empty State -->
+    <div id="emptyState" class="hidden p-12 text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-500 mb-4" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="text-gray-400 text-lg font-medium mb-2">No tournaments found</h3>
+        <p class="text-gray-500 mb-4">Get started by creating your first tournament.</p>
+        <a href="/tournament/add" class="inline-flex items-center px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors">
+            <svg class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Create Tournament
+        </a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search');
+        const statusFilter = document.getElementById('statusFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const tournamentRows = document.querySelectorAll('.tournament-row');
+        const emptyState = document.getElementById('emptyState');
+        const tableBody = document.getElementById('tournamentsTableBody');
+
+        // Update tournament status based on dates
+        function updateTournamentStatus() {
+            const today = new Date();
+            const statusElements = document.querySelectorAll('.tournament-status');
+            let activeCount = 0, upcomingCount = 0, completedCount = 0;
+
+            statusElements.forEach(element => {
+                const startDate = new Date(element.dataset.start);
+                const endDate = new Date(element.dataset.end);
+                let status = 'upcoming';
+                let statusClass = 'bg-blue-500 text-blue-100';
+
+                if (today >= startDate && today <= endDate) {
+                    status = 'ongoing';
+                    statusClass = 'bg-green-500 text-green-100';
+                    activeCount++;
+                } else if (today > endDate) {
+                    status = 'completed';
+                    statusClass = 'bg-gray-500 text-gray-100';
+                    completedCount++;
+                } else {
+                    upcomingCount++;
+                }
+
+                element.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                element.className = `px-3 py-1 rounded-full text-xs font-semibold tournament-status ${statusClass}`;
+                element.dataset.status = status;
+            });
+
+            // Update stats
+            document.getElementById('activeTournaments').textContent = activeCount;
+            document.getElementById('upcomingTournaments').textContent = upcomingCount;
+            document.getElementById('completedTournaments').textContent = completedCount;
+        }
+
+        // Filter tournaments
+        function filterTournaments() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const statusValue = statusFilter.value;
+            const typeValue = typeFilter.value;
+            let visibleCount = 0;
+
+            tournamentRows.forEach(row => {
+                const name = row.dataset.name.toLowerCase();
+                const type = row.dataset.type;
+                const statusElement = row.querySelector('.tournament-status');
+                const status = statusElement ? statusElement.dataset.status : '';
+
+                const matchesSearch = name.includes(searchTerm);
+                const matchesStatus = !statusValue || status === statusValue;
+                const matchesType = !typeValue || type === typeValue;
+
+                if (matchesSearch && matchesStatus && matchesType) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            // Show/hide empty state
+            if (visibleCount === 0) {
+                emptyState.classList.remove('hidden');
+                tableBody.style.display = 'none';
+            } else {
+                emptyState.classList.add('hidden');
+                tableBody.style.display = '';
+            }
+        }
+
+        // Initialize
+        updateTournamentStatus();
+
+        // Event listeners
+        searchInput.addEventListener('input', filterTournaments);
+        statusFilter.addEventListener('change', filterTournaments);
+        typeFilter.addEventListener('change', filterTournaments);
+
+        // Show empty state if no tournaments
+        if (tournamentRows.length === 0) {
+            emptyState.classList.remove('hidden');
+        }
+    });
+</script>
+</body>
+</html>

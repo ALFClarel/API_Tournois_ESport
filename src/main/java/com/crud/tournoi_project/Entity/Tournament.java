@@ -1,6 +1,8 @@
 package com.crud.tournoi_project.Entity;
 
 import jakarta.persistence.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 @Entity
@@ -13,7 +15,9 @@ public class Tournament {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nom;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_debut;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date_fin;
     private String tournamentClass;
 
