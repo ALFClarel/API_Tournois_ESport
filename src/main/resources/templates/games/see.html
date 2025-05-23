@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du jeu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen py-8">
+<div class="container mx-auto px-4 max-w-4xl">
+    <!-- En-tête avec bouton retour -->
+    <div class="mb-6">
+        <a href="/games" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Retour à la liste
+        </a>
+    </div>
+
+    <!-- Carte principale du jeu -->
+    <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+        <!-- En-tête de la carte -->
+        <div class="bg-gradient-to-r from-blue-500 to-purple-600 px-6 py-8 text-white">
+            <h1 class="text-3xl font-bold mb-2" th:text="${game.title}">Titre du jeu</h1>
+            <p class="text-blue-100 text-sm">Détails du jeu</p>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="p-6">
+            <!-- Section Description -->
+            <div class="mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                    </svg>
+                    Description
+                </h2>
+                <div class="bg-gray-50 rounded-lg p-4 border-l-4 border-blue-500">
+                    <p class="text-gray-700 leading-relaxed" th:text="${game.description}">
+                        Description du jeu apparaîtra ici...
+                    </p>
+                </div>
+            </div>
+
+            <!-- Section Actions -->
+            <div class="border-t pt-6">
+                <h3 class="text-lg font-medium text-gray-800 mb-4">Actions</h3>
+                <div class="flex flex-wrap gap-3">
+                    <!-- Bouton Modifier -->
+                    <a th:href="@{/game/{id}(id=${game.id})}" class="inline-flex items-center px-4 py-2 bg-yellow-500 hover:bg-yellow-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+                        </svg>
+                        Modifier
+                    </a>
+
+                    <!-- Bouton Supprimer -->
+                    <form th:action="@{/game/delete/{id}(id=${game.id})}" method="get" class="inline-block" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce jeu ?');">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 bg-red-500 hover:bg-red-600 text-white font-medium rounded-lg transition-colors duration-200 shadow-sm hover:shadow-md">
+                            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                            </svg>
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Informations supplémentaires -->
+    <div class="mt-6 bg-blue-50 rounded-lg p-4 border border-blue-200">
+        <div class="flex items-start">
+            <svg class="w-5 h-5 text-blue-500 mt-1 mr-3 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div>
+                <h4 class="text-sm font-medium text-blue-800 mb-1">Information</h4>
+                <p class="text-sm text-blue-700">
+                    Vous pouvez modifier ou supprimer ce jeu en utilisant les boutons ci-dessus.
+                    La suppression est définitive et ne peut pas être annulée.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Animation d'apparition au chargement
+    document.addEventListener('DOMContentLoaded', function() {
+        const card = document.querySelector('.bg-white');
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+
+        setTimeout(() => {
+            card.style.transition = 'all 0.5s ease-out';
+            card.style.opacity = '1';
+            card.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+</body>
+</html>

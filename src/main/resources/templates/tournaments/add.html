@@ -33,7 +33,7 @@
 <!-- Main Form Container -->
 <div class="max-w-4xl mx-auto">
     <div class="bg-gray-800 rounded-2xl shadow-lg border border-gray-700 p-8">
-        <form th:action="@{/tournament/save}" th:object="${tournament}" method="post" class="space-y-6">
+        <form th:action="@{/tournament/save}" method="post" class="space-y-6">
 
             <!-- Tournament Name -->
             <div>
@@ -50,8 +50,7 @@
             <!-- Tournament Type -->
             <div>
                 <label for="tournamentClass" class="block text-sm font-medium text-gray-300 mb-2">Tournament Type</label>
-                <select th:field="*{tournamentClass}"
-                        id="tournamentClass"
+                <select id="tournamentClass"
                         name="tournamentClass"
                         class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                         required>
@@ -87,43 +86,6 @@
                 </div>
             </div>
 
-<!--            &lt;!&ndash; Description &ndash;&gt;
-            <div>
-                <label for="description" class="block text-sm font-medium text-gray-300 mb-2">Description</label>
-                <textarea th:field="*{description}"
-                          id="description"
-                          name="description"
-                          rows="4"
-                          class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent resize-none"
-                          placeholder="Enter tournament description (optional)"></textarea>
-            </div>
-
-            &lt;!&ndash; Max Participants &ndash;&gt;
-            <div>
-                <label for="maxParticipants" class="block text-sm font-medium text-gray-300 mb-2">Maximum Participants</label>
-                <input type="number"
-                       th:field="*{maxParticipants}"
-                       id="maxParticipants"
-                       name="maxParticipants"
-                       min="2"
-                       max="256"
-                       class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                       placeholder="Enter maximum number of participants">
-            </div>
-
-            &lt;!&ndash; Prize Pool &ndash;&gt;
-            <div>
-                <label for="prizePool" class="block text-sm font-medium text-gray-300 mb-2">Prize Pool ($)</label>
-                <input type="number"
-                       th:field="*{prizePool}"
-                       id="prizePool"
-                       name="prizePool"
-                       min="0"
-                       step="0.01"
-                       class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                       placeholder="Enter prize pool amount (optional)">
-            </div>-->
-
             <!-- Action Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 pt-6">
                 <button type="submit"
@@ -144,53 +106,5 @@
         </form>
     </div>
 </div>
-
-<!-- Tournament Type Info Cards -->
-<div class="max-w-4xl mx-auto mt-8">
-    <h3 class="text-xl font-bold text-white mb-4">Tournament Types</h3>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-gray-800 rounded-lg border border-gray-700 p-4">
-            <div class="flex items-center mb-2">
-                <span class="bg-yellow-500 text-yellow-900 px-2 py-1 rounded-full text-xs font-semibold">Round Robin</span>
-            </div>
-            <p class="text-gray-300 text-sm">Every participant plays against every other participant. Best for smaller groups.</p>
-        </div>
-
-        <div class="bg-gray-800 rounded-lg border border-gray-700 p-4">
-            <div class="flex items-center mb-2">
-                <span class="bg-blue-500 text-blue-900 px-2 py-1 rounded-full text-xs font-semibold">Single Elimination</span>
-            </div>
-            <p class="text-gray-300 text-sm">Lose once and you're out. Fast-paced tournament format with clear progression.</p>
-        </div>
-
-        <div class="bg-gray-800 rounded-lg border border-gray-700 p-4">
-            <div class="flex items-center mb-2">
-                <span class="bg-green-500 text-green-900 px-2 py-1 rounded-full text-xs font-semibold">Double Elimination</span>
-            </div>
-            <p class="text-gray-300 text-sm">Participants get a second chance. More forgiving while maintaining competitive integrity.</p>
-        </div>
-    </div>
-</div>
-
-<script>
-    // Add some basic form validation
-    document.addEventListener('DOMContentLoaded', function() {
-        const startDateInput = document.getElementById('date_debut');
-        const endDateInput = document.getElementById('date_fin');
-
-        // Set minimum date to today
-        const today = new Date().toISOString().split('T')[0];
-        startDateInput.min = today;
-        endDateInput.min = today;
-
-        // Ensure end date is after start date
-        startDateInput.addEventListener('change', function() {
-            endDateInput.min = this.value;
-            if (endDateInput.value && endDateInput.value < this.value) {
-                endDateInput.value = this.value;
-            }
-        });
-    });
-</script>
 </body>
 </html>

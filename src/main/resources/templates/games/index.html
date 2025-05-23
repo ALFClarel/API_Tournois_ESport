@@ -38,7 +38,7 @@
                 <p th:text="${game.description}" class="text-gray-300 mb-4 line-clamp-3">Description du jeu, qui peut être sur plusieurs lignes et sera tronquée après 3 lignes si elle est trop longue.</p>
 
                 <div class="flex justify-end">
-                    <a th:href="@{/game/details/{id}(id=${game.id})}" class="text-sm font-medium text-blue-400 hover:text-blue-300 transition">
+                    <a th:href="@{/game/{id}(id=${game.id})}" class="text-sm font-medium text-blue-400 hover:text-blue-300 transition">
                         Voir détails →
                     </a>
                 </div>
